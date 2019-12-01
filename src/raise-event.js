@@ -28,7 +28,7 @@ function raiseEvent(component, handlerName, args)
     if(isCallable(handler)) {
         handler(args);
     }
-};
+}
 
 module.exports = {
     raiseEvent : raiseEvent,

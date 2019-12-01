@@ -32,12 +32,11 @@ function createSimpleContextEnhancer<X extends React.Context<any>, Xp = {}>(
                 </Ctxt.Consumer>
             );
         };
-        I.contextValueProps = {} as Xp;
+        I.injectedPropType = {} as Xp;
         I.whyDidYouRender = true;
 
         var F = React.memo(I);
         F.displayName = `WithContext<${ option.contextDisplayName }>(${ componentType.displayName || componentType.name })`;
-        F["whyDidYouRender"] = true;
 
         return hoistNonReactStatics(F, I);
     };

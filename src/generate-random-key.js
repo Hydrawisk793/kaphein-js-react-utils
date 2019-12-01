@@ -14,7 +14,7 @@ function generateRandomKey(length)
     }
 
     return keyChars.join("");
-};
+}
 
 module.exports = {
     generateRandomKey : generateRandomKey,
