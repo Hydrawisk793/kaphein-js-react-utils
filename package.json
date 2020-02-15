@@ -5,7 +5,11 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
+  "bundleDependencies": [],
   "dependencies": {
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/react": "^16.9.19",
@@ -17,13 +21,18 @@
   },
   "scripts": {
     "start": "styleguidist server",
-    "build": "rm -rf dist && cross-env NODE_ENV=production babel src --extensions '.tsx','.jsx' --out-dir dist --copy-files && tsc -p ./tsconfig.types.json --outDir dist"
+    "build": "rm -rf dist && npm test && tsc -p ./tsconfig.types.json && webpack --mode=production -c webpack.config.js",
+    "build-without-webpack": "rm -rf dist && cross-env NODE_ENV=production babel src --extensions '.tsx' --out-dir dist --copy-files && tsc -p ./tsconfig.types.json",
+    "test": "eslint src && eslint src -c src/.eslintrc.ts.json --ext '.d.ts'",
+    "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
+    "@babel/plugin-transform-reserved-words": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
@@ -36,7 +45,20 @@
     "eslint-plugin-react": "^7.18.3",
     "react-styleguidist": "^10.6.2",
     "typescript": "^3.7.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
-  }
+    "webpack-cli": "^3.3.11",
+    "webpack-es3-plugin": "^1.5.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "description": "A toolkit for developing various react.js applications.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hydrawisk793/kaphein-js-react-utils.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Hydrawisk793/kaphein-js-react-utils/issues"
+  },
+  "homepage": "https://github.com/Hydrawisk793/kaphein-js-react-utils#readme"
 }

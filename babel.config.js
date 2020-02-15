@@ -1,6 +1,12 @@
 module.exports = {
     "presets": [
-        "@babel/preset-env",
+        [
+            "@babel/preset-env",
+            {
+                "loose": true,
+                "modules": "commonjs"
+            }
+        ],
         "@babel/preset-react",
         [
             "@babel/preset-typescript",
@@ -11,6 +17,13 @@ module.exports = {
         ]
     ],
     "plugins": [
-        "@babel/plugin-proposal-class-properties"
+        "@babel/plugin-proposal-class-properties",
+        [
+            "@babel/plugin-transform-modules-commonjs",
+            {
+                "allowTopLevelThis": true
+            }
+        ],
+        "@babel/plugin-transform-reserved-words"
     ]
 };
