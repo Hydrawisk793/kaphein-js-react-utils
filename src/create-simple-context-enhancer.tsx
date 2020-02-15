@@ -1,7 +1,7 @@
 import React from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
+import { memoize } from "kaphein-js";
 
-import { memoize } from "../kaphein-js/utils/function";
 import { SimpleContextEnhancerOption } from "./simple-context-enhancer-option";
 
 function createSimpleContextEnhancer<X extends React.Context<any>, Xp = {}>(
