@@ -5,7 +5,7 @@ import { memoize } from "kaphein-js";
 import { ReactContextValueType } from "./ts-utils";
 import { SimpleContextEnhancerOption } from "./simple-context-enhancer-option";
 
-function createSimpleContextEnhancer<X extends React.Context<any> = React.Context<any>, Xp = {}>(
+export function createSimpleContextEnhancer<X extends React.Context<any> = React.Context<any>, Xp = {}>(
     context : X,
     option : SimpleContextEnhancerOption<X, Xp>
 )
@@ -42,7 +42,3 @@ function createSimpleContextEnhancer<X extends React.Context<any> = React.Contex
         return hoistNonReactStatics(F, I);
     };
 }
-
-export {
-    createSimpleContextEnhancer,
-};
