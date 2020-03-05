@@ -1,6 +1,6 @@
 {
   "name": "kaphein-js-react-utils",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "author": "Hydrawisk793 <hyw793@gmail.com>",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -14,15 +14,15 @@
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/react": "^16.9.19",
     "hoist-non-react-statics": "^3.3.2",
-    "kaphein-js": "^0.1.5",
+    "kaphein-js": "^0.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0"
   },
   "scripts": {
     "start": "styleguidist server",
-    "build": "rm -rf dist && npm test && tsc -p ./tsconfig.types.json && webpack --mode=production -c webpack.config.js",
-    "test": "eslint src && eslint src -c src/.eslintrc.ts.json --ext '.d.ts'",
-    "prepublishOnly": "npm run build"
+    "lint": "eslint src && eslint src -c src/.eslintrc.ts.json --ext '.d.ts'",
+    "build": "rm -rf dist && npm run lint && tsc -p ./tsconfig.types.json && webpack --mode=production -c webpack.config.js",
+    "prepack": "npm install && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -42,8 +42,8 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.18.3",
     "react-styleguidist": "^10.6.2",
+    "terser-webpack-plugin": "^2.3.5",
     "typescript": "^3.7.5",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
     "webpack-es3-plugin": "^1.5.0",
