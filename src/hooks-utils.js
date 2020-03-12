@@ -32,39 +32,35 @@ export function useComponentMountEffects(onDidMount = void 0, onWillUnmount = vo
     const [didMount, setDidMount] = useState(false);
     const [willUnmount, setWillUnmount] = useState(false);
 
+    const didMountRef = useRef(onDidMount);
+    const willUnmountRef = useRef(onWillUnmount);
+
     useLayoutEffect(
         () =>
         {
             if(!didMount) {
                 setDidMount(true);
-
-                if(isFunction(onDidMount)) {
-                    onDidMount();
+                if(isFunction(didMountRef.current)) {
+                    didMountRef.current();
                 }
             }
-        },
-        [
-            didMount,
-            onDidMount,
-        ]
-    );
 
-    useLayoutEffect(
-        () =>
-        () =>
-        {
-            if(didMount && !willUnmount) {
-                setWillUnmount(true);
-
-                if(isFunction(onWillUnmount)) {
-                    onWillUnmount();
-                }
+            if(didMount) {
+                return () =>
+                {
+                    if(didMount && !willUnmount) {
+                        setWillUnmount(true);
+                        if(isFunction(willUnmountRef.current())) {
+                            // eslint-disable-next-line react-hooks/exhaustive-deps
+                            willUnmountRef.current();
+                        }
+                    }
+                };
             }
         },
         [
             didMount,
             willUnmount,
-            onWillUnmount,
         ]
     );
 
