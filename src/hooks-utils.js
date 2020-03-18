@@ -84,18 +84,18 @@ export function useComponentMountEffects(onDidMount = void 0, onWillUnmount = vo
  */
 export function useEventCallback(callback)
 {
-    const ref = useRef(/** @type {typeof callback} */(null));
+    const callbackRef = useRef(callback);
 
     useLayoutEffect(
         () =>
         {
-            ref.current = callback;
+            callbackRef.current = callback;
         }
     );
 
     return useCallback(
         // Unbounds the this reference of the callback.
-        (...args) => (0, ref.current)(...args),
+        (...args) => (callbackRef.current ? (0, callbackRef.current)(...args) : void 0),
         []
     );
 }
