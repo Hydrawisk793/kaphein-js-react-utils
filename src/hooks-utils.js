@@ -1,4 +1,10 @@
-import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import {
+    useRef,
+    useState,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+} from "react";
 import { isFunction } from "kaphein-js";
 
 /**
@@ -65,4 +71,31 @@ export function useComponentMountEffects(onDidMount = void 0, onWillUnmount = vo
     );
 
     return [didMount, willUnmount];
+}
+
+/**
+ *  Original by sophiebits and sokra.
+ *  https://github.com/facebook/react/issues/14099#issuecomment-440013892
+ *  https://github.com/facebook/react/issues/14099#issuecomment-440172008
+ *
+ *  @template {(...args : any[]) => any} T
+ *  @param {T} callback
+ *  @returns {T}
+ */
+export function useEventCallback(callback)
+{
+    const ref = useRef(/** @type {typeof callback} */(null));
+
+    useLayoutEffect(
+        () =>
+        {
+            ref.current = callback;
+        }
+    );
+
+    return useCallback(
+        // Unbounds the this reference of the callback.
+        (...args) => (0, ref.current)(...args),
+        []
+    );
 }
