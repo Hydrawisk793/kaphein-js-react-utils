@@ -99,3 +99,59 @@ export function useEventCallback(callback)
         []
     );
 }
+
+/**
+ *  @param {Element} target
+ *  @param {(entry : ResizeObserverEntry) => void} onRegionChanged
+ *  @param {{
+        ResizeObserver : typeof ResizeObserver;
+    }} [option]
+ */
+export function useResizeObserver(target, onRegionChanged, option = {})
+{
+    const ResizeObserver = (
+        ("undefined" === typeof window || !("ResizeObserver" in window))
+        ? option.ResizeObserver
+        : window.ResizeObserver
+    );
+    const observer = useRef(/** @type {ResizeObserver} */(null));
+
+    useEffect(
+        () =>
+        {
+            if(observer.current) {
+                observer.current.disconnect();
+                observer.current = null;
+            }
+
+            if(target) {
+                const newObserver = new ResizeObserver(
+                    (entries) =>
+                    {
+                        for(let entry of entries) {
+                            if(entry.target === target) {
+                                if(isFunction(onRegionChanged)) {
+                                    onRegionChanged(entry);
+                                }
+                            }
+                        }
+                    }
+                );
+                newObserver.observe(target);
+                observer.current = newObserver;
+
+                return () =>
+                {
+                    if(observer.current) {
+                        observer.current.disconnect();
+                    }
+                }
+            }
+        },
+        [
+            ResizeObserver,
+            target,
+            onRegionChanged,
+        ]
+    );
+}

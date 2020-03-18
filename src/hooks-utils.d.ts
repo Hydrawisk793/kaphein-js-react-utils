@@ -18,3 +18,13 @@ export function useComponentMountEffects(
 export function useEventCallback<T extends (...args : any[]) => any>(
     callback : T
 ) : T;
+
+export function useResizeObserver(
+    target : Element,
+    onRegionChanged : (
+        entry : ResizeObserverEntry
+    ) => void,
+    option? : {
+        ResizeObserver : typeof ResizeObserver;
+    }
+) : void;
