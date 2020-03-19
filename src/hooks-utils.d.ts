@@ -11,10 +11,13 @@ export function useComponentWillUnmount(
     callback : Function
 ) : void;
 
+/**
+ *  @deprecated Use 'useComponentDidMount' and 'useComponentWillUnmount' instead.
+ */
 export function useComponentMountEffects(
     didMount? : Function,
     willUnmount? : Function
-) : [boolean, boolean];
+) : void;
 
 /**
  *  Original by sophiebits and sokra.
