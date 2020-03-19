@@ -3,6 +3,14 @@ export function usePrevious<T>(
     initialValue? : T
 ) : T;
 
+export function useComponentDidMount(
+    callback : Function
+) : void;
+
+export function useComponentWillUnmount(
+    callback : Function
+) : void;
+
 export function useComponentMountEffects(
     didMount? : Function,
     willUnmount? : Function

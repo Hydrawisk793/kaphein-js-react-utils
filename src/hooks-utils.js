@@ -1,9 +1,9 @@
 import {
     useRef,
-    useState,
     useCallback,
     useEffect,
     useLayoutEffect,
+    useState,
 } from "react";
 import { isFunction } from "kaphein-js";
 
@@ -27,6 +27,45 @@ export function usePrevious(value)
     );
 
     return prevValueRef.current;
+}
+
+/**
+ *  @param {Function} callback
+ */
+export function useComponentDidMount(callback)
+{
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+
+    useLayoutEffect(
+        () =>
+        {
+            if(callbackRef.current) {
+                (0, callbackRef.current)();
+            }
+        },
+        []
+    );
+}
+
+/**
+ *  @param {Function} callback
+ */
+export function useComponentWillUnmount(callback)
+{
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+
+    useLayoutEffect(
+        () =>
+        () =>
+        {
+            if(callbackRef.current) {
+                (0, callbackRef.current)();
+            }
+        },
+        []
+    );
 }
 
 /**
