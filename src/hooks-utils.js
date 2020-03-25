@@ -106,6 +106,67 @@ export function useEventCallback(callback)
 
 /**
  *  @param {Element} target
+ *  @param {MutationObserverInit} observerOption
+ *  @param {(mutation : MutationRecord) => void} onChanged
+ *  @param {{
+        MutationObserver : typeof MutationObserver;
+    }} [option]
+ */
+export function useMutationObserver(target, observerOption, onChanged, option = {})
+{
+    const MutationObserver = (
+        ("undefined" === typeof window || !("MutationObserver" in window))
+        ? option.MutationObserver
+        : window.MutationObserver
+    );
+    const observer = useRef(/** @type {MutationObserver} */(null));
+
+    useEffect(
+        () =>
+        {
+            if(observer.current) {
+                observer.current.disconnect();
+                observer.current = null;
+            }
+
+            if(target) {
+                /** @type {MutationObserver} */const newObserver = new MutationObserver(
+                    /**
+                     *  @param {MutationRecord[]} mutations
+                     */
+                    (mutations) =>
+                    {
+                        for(let mutation of mutations) {
+                            if(mutation.target === target) {
+                                if(isFunction(onChanged)) {
+                                    onChanged(mutation);
+                                }
+                            }
+                        }
+                    }
+                );
+                newObserver.observe(target, observerOption);
+                observer.current = newObserver;
+
+                return () =>
+                {
+                    if(observer.current) {
+                        observer.current.disconnect();
+                    }
+                }
+            }
+        },
+        [
+            MutationObserver,
+            observerOption,
+            target,
+            onChanged,
+        ]
+    );
+}
+
+/**
+ *  @param {Element} target
  *  @param {(entry : ResizeObserverEntry) => void} onRegionChanged
  *  @param {{
         ResizeObserver : typeof ResizeObserver;

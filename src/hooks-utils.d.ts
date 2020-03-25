@@ -30,6 +30,17 @@ export function useEventCallback<T extends (...args : any[]) => any>(
     callback : T
 ) : T;
 
+export function useMutationObserver(
+    target : Element,
+    observerOption : MutationObserverInit,
+    onChanged : (
+        mutation : MutationRecord
+    ) => void,
+    option? : {
+        MutationObserver : typeof MutationObserver;
+    }
+) : void;
+
 export function useResizeObserver(
     target : Element,
     onRegionChanged : (
