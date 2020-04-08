@@ -105,53 +105,46 @@ export function useEventCallback(callback)
 }
 
 /**
- *  @param {Element} target
+ *  @param {React.MutableRefObject<Element>} targetRef
  *  @param {MutationObserverInit} observerOption
  *  @param {(mutation : MutationRecord) => void} onChanged
  *  @param {{
         MutationObserver : typeof MutationObserver;
     }} [option]
  */
-export function useMutationObserver(target, observerOption, onChanged, option = {})
+export function useMutationObserver(targetRef, observerOption, onChanged, option = {})
 {
-    const MutationObserver = (
+    /** @type {window["MutationObserver"] */const MutationObserver = (
         ("undefined" === typeof window || !("MutationObserver" in window))
         ? option.MutationObserver
         : window.MutationObserver
     );
-    const observer = useRef(/** @type {MutationObserver} */(null));
 
     useEffect(
-        () =>
+        function ()
         {
-            if(observer.current) {
-                observer.current.disconnect();
-                observer.current = null;
-            }
-
-            if(target) {
-                /** @type {MutationObserver} */const newObserver = new MutationObserver(
-                    /**
-                     *  @param {MutationRecord[]} mutations
-                     */
-                    (mutations) =>
-                    {
-                        for(let mutation of mutations) {
-                            if(mutation.target === target) {
-                                if(isFunction(onChanged)) {
-                                    onChanged(mutation);
+            if(targetRef.current) {
+                /** @type {MutationObserver} */let observer = null;
+                if(MutationObserver) {
+                    observer = new MutationObserver(
+                        function (mutations)
+                        {
+                            for(let mutation of mutations) {
+                                if(mutation.target === targetRef.current) {
+                                    if(isFunction(onChanged)) {
+                                        onChanged(mutation);
+                                    }
                                 }
                             }
                         }
-                    }
-                );
-                newObserver.observe(target, observerOption);
-                observer.current = newObserver;
+                    );
+                    observer.observe(targetRef.current, observerOption);
+                }
 
-                return () =>
+                return function ()
                 {
-                    if(observer.current) {
-                        observer.current.disconnect();
+                    if(observer) {
+                        observer.disconnect();
                     }
                 }
             }
@@ -159,63 +152,59 @@ export function useMutationObserver(target, observerOption, onChanged, option = 
         [
             MutationObserver,
             observerOption,
-            target,
+            targetRef,
             onChanged,
         ]
     );
 }
 
 /**
- *  @param {Element} target
+ *  @param {React.MutableRefObject<Element>} targetRef
  *  @param {(entry : ResizeObserverEntry) => void} onRegionChanged
  *  @param {{
         ResizeObserver : typeof ResizeObserver;
     }} [option]
  */
-export function useResizeObserver(target, onRegionChanged, option = {})
+export function useResizeObserver(targetRef, onRegionChanged, option = {})
 {
-    const ResizeObserver = (
+    /** @type {window["ResizeObserver"]} */const ResizeObserver = (
         ("undefined" === typeof window || !("ResizeObserver" in window))
         ? option.ResizeObserver
         : window.ResizeObserver
     );
-    const observer = useRef(/** @type {ResizeObserver} */(null));
 
     useEffect(
-        () =>
+        function ()
         {
-            if(observer.current) {
-                observer.current.disconnect();
-                observer.current = null;
-            }
-
-            if(target) {
-                const newObserver = new ResizeObserver(
-                    (entries) =>
-                    {
-                        for(let entry of entries) {
-                            if(entry.target === target) {
-                                if(isFunction(onRegionChanged)) {
-                                    onRegionChanged(entry);
+            if(targetRef.current) {
+                /** @type {ResizeObserver} */let observer = null;
+                if(ResizeObserver) {
+                    observer = new ResizeObserver(
+                        function (entries)
+                        {
+                            for(let entry of entries) {
+                                if(entry.target === targetRef.current) {
+                                    if(isFunction(onRegionChanged)) {
+                                        onRegionChanged(entry);
+                                    }
                                 }
                             }
                         }
-                    }
-                );
-                newObserver.observe(target);
-                observer.current = newObserver;
+                    );
+                    observer.observe(targetRef.current);
+                }
 
-                return () =>
+                return function ()
                 {
-                    if(observer.current) {
-                        observer.current.disconnect();
+                    if(observer) {
+                        observer.disconnect();
                     }
                 }
             }
         },
         [
             ResizeObserver,
-            target,
+            targetRef,
             onRegionChanged,
         ]
     );
