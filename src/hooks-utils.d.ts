@@ -1,7 +1,13 @@
+import { MutableRefObject } from "react";
+
 export function usePrevious<T>(
     value : T,
     initialValue? : T
 ) : T;
+
+export function useLatestRef<T>(
+    value : T
+) : MutableRefObject<T>;
 
 export function useComponentDidMount(
     callback : Function

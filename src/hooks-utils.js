@@ -29,6 +29,18 @@ export function usePrevious(value)
 }
 
 /**
+ *  @template T
+ *  @param {T} value
+ */
+export function useLatestRef(value)
+{
+    var ref = useRef(value);
+    ref.current = value;
+
+    return ref;
+}
+
+/**
  *  @param {Function} callback
  */
 export function useComponentDidMount(callback)
