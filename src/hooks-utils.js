@@ -13,7 +13,7 @@ import { isFunction } from "kaphein-js";
  */
 export function usePrevious(value)
 {
-    var prevValueRef = useRef(arguments[1]);
+    var prevValueRef = useRef((arguments.lenght > 1 ? arguments[1] : value));
 
     useEffect(
         function ()
@@ -26,6 +26,18 @@ export function usePrevious(value)
     );
 
     return prevValueRef.current;
+}
+
+/**
+ *  @template T
+ *  @param {T} value
+ */
+export function useLatestRef(value)
+{
+    var ref = useRef(value);
+    ref.current = value;
+
+    return ref;
 }
 
 /**
