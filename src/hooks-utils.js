@@ -35,7 +35,16 @@ export function usePrevious(value)
 export function useLatestRef(value)
 {
     var ref = useRef(value);
-    ref.current = value;
+
+    useEffect(
+        function ()
+        {
+            ref.current = value;
+        },
+        [
+            value
+        ]
+    );
 
     return ref;
 }
