@@ -21,8 +21,9 @@
     "homepage": "https://github.com/Hydrawisk793/kaphein-js-react-utils#readme",
     "scripts": {
         "start": "styleguidist server",
-        "lint": "eslint src && eslint src -c src/.eslintrc.ts.json --ext '.d.ts'",
-        "build": "rm -rf dist && npm run lint && tsc -p ./tsconfig.dts.json && webpack --mode production -c webpack.config.js",
+        "lint": "tsc --project tsconfig.dts.json && eslint src/**/*.js",
+        "lint:fix": "npm run lint -- --fix",
+        "build": "rm -rf dist && npm run lint && webpack --mode production -c webpack.config.js",
         "prepack": "npm install && npm run build"
     },
     "bundleDependencies": [],
