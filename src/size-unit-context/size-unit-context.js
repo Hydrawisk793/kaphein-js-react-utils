@@ -12,8 +12,7 @@ export const {
     };
 
     const SizeUnitContext = createContext(defaultValue);
-    SizeUnitContext.Provider.displayName = "SizeUnitContext.Provider";
-    SizeUnitContext.Consumer.displayName = "SizeUnitContext.Consumer";
+    SizeUnitContext.displayName = "SizeUnitContext";
 
     return {
         SizeUnitContext,
