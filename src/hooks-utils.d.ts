@@ -1,4 +1,5 @@
-import { MutableRefObject } from "react";
+import { DependencyList, MutableRefObject } from "react";
+import { EqualComparer } from "kaphein-js";
 
 export function usePrevious<T>(
     value : T,
@@ -10,6 +11,12 @@ export function useLatestRef<T>(
 ) : MutableRefObject<T>;
 
 export function useIsMountedRef() : MutableRefObject<boolean>;
+
+export function useDeepMemo<V>(
+    factory : () => V,
+    deps? : DependencyList | null,
+    comparer? : EqualComparer<any>
+) : V;
 
 export function useComponentDidMount(
     callback : Function

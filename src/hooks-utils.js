@@ -6,9 +6,14 @@ var useLayoutEffect = React.useLayoutEffect;
 var kapheinJs = require("kaphein-js");
 var isFunction = kapheinJs.isFunction;
 var forOf = kapheinJs.forOf;
+var deepEquals = kapheinJs.deepEquals;
 
 module.exports = (function ()
 {
+    /**
+     *  @typedef {import("kaphein-js").EqualComparer<any>} AnyEqualComparer
+     */
+
     /**
      *  @template T
      *  @param {T} value
@@ -70,6 +75,42 @@ module.exports = (function ()
         );
 
         return ref;
+    }
+
+    var emptyDeps = [];
+
+    /**
+     *  Inspired by apollo-client (https://github.com/apollographql/apollo-client/blob/master/src/react/hooks/utils/useDeepMemo.ts)
+     *
+     *  @template V
+     *  @param {() => V} factory
+     *  @param {any[]} [deps]
+     *  @param {AnyEqualComparer} [comparer]
+     */
+    function useDeepMemo(factory)
+    {
+        if("function" !== typeof factory)
+        {
+            throw new TypeError("'factory' must be a function that returns a value.");
+        }
+
+        var deps = arguments[1] || emptyDeps;
+        /** @type {AnyEqualComparer} */var comparer = arguments[2];
+        if("function" !== typeof comparer)
+        {
+            comparer = deepEquals;
+        }
+
+        var memoRef = useRef(/** @type {{ deps : any[], value : V }} */(null));
+        if(!memoRef.current || !comparer(deps, memoRef.current.deps))
+        {
+            memoRef.current = {
+                deps : deps,
+                value : factory()
+            };
+        }
+
+        return memoRef.current.value;
     }
 
     /**
@@ -290,6 +331,7 @@ module.exports = (function ()
         usePrevious : usePrevious,
         useLatestRef : useLatestRef,
         useIsMountedRef : useIsMountedRef,
+        useDeepMemo : useDeepMemo,
         useComponentDidMount : useComponentDidMount,
         useComponentWillUnmount : useComponentWillUnmount,
         useComponentMountEffects : useComponentMountEffects,
