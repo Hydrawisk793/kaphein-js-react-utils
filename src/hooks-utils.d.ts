@@ -9,6 +9,8 @@ export function useLatestRef<T>(
     value : T
 ) : MutableRefObject<T>;
 
+export function useIsMountedRef() : MutableRefObject<boolean>;
+
 export function useComponentDidMount(
     callback : Function
 ) : void;

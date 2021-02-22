@@ -52,6 +52,26 @@ module.exports = (function ()
         return ref;
     }
 
+    function useIsMountedRef()
+    {
+        var ref = useRef(false);
+
+        useEffect(
+            function ()
+            {
+                ref.current = true;
+
+                return function ()
+                {
+                    ref.current = false;
+                };
+            },
+            []
+        );
+
+        return ref;
+    }
+
     /**
      *  @param {Function} callback
      */
@@ -269,6 +289,7 @@ module.exports = (function ()
     return {
         usePrevious : usePrevious,
         useLatestRef : useLatestRef,
+        useIsMountedRef : useIsMountedRef,
         useComponentDidMount : useComponentDidMount,
         useComponentWillUnmount : useComponentWillUnmount,
         useComponentMountEffects : useComponentMountEffects,
