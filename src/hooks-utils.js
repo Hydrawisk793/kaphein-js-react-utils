@@ -63,7 +63,8 @@ module.exports = (function ()
         useLayoutEffect(
             function ()
             {
-                if(callbackRef.current) {
+                if(callbackRef.current)
+                {
                     (0, callbackRef.current)();
                 }
             },
@@ -154,23 +155,27 @@ module.exports = (function ()
         }
         /** @type {window["MutationObserver"] */var MutationObserver = (
             ("undefined" === typeof window || !("MutationObserver" in window))
-            ? option.MutationObserver
-            : window.MutationObserver
+                ? option.MutationObserver
+                : window.MutationObserver
         );
 
         useEffect(
             function ()
             {
-                if(targetRef.current) {
+                if(targetRef.current)
+                {
                     /** @type {MutationObserver} */var observer = null;
-                    if(MutationObserver) {
+                    if(MutationObserver)
+                    {
                         observer = new MutationObserver(
                             function (mutations)
                             {
                                 forOf(mutations, function (mutation)
                                 {
-                                    if(mutation.target === targetRef.current) {
-                                        if(isFunction(onChanged)) {
+                                    if(mutation.target === targetRef.current)
+                                    {
+                                        if(isFunction(onChanged))
+                                        {
                                             onChanged(mutation);
                                         }
                                     }
@@ -182,7 +187,8 @@ module.exports = (function ()
 
                     return function ()
                     {
-                        if(observer) {
+                        if(observer)
+                        {
                             observer.disconnect();
                         }
                     }
@@ -213,23 +219,27 @@ module.exports = (function ()
         }
         /** @type {window["ResizeObserver"]} */var ResizeObserver = (
             ("undefined" === typeof window || !("ResizeObserver" in window))
-            ? option.ResizeObserver
-            : window.ResizeObserver
+                ? option.ResizeObserver
+                : window.ResizeObserver
         );
 
         useEffect(
             function ()
             {
-                if(targetRef.current) {
+                if(targetRef.current)
+                {
                     /** @type {ResizeObserver} */var observer = null;
-                    if(ResizeObserver) {
+                    if(ResizeObserver)
+                    {
                         observer = new ResizeObserver(
                             function (entries)
                             {
                                 forOf(entries, function (entry)
                                 {
-                                    if(entry.target === targetRef.current) {
-                                        if(isFunction(onRegionChanged)) {
+                                    if(entry.target === targetRef.current)
+                                    {
+                                        if(isFunction(onRegionChanged))
+                                        {
                                             onRegionChanged(entry);
                                         }
                                     }
@@ -241,7 +251,8 @@ module.exports = (function ()
 
                     return function ()
                     {
-                        if(observer) {
+                        if(observer)
+                        {
                             observer.disconnect();
                         }
                     }
