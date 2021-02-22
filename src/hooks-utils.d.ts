@@ -37,7 +37,7 @@ export function useEventCallback<T extends (...args : any[]) => any>(
 ) : T;
 
 export function useMutationObserver(
-    target : React.MutableRefObject<Element>,
+    target : MutableRefObject<Element>,
     observerOption : MutationObserverInit,
     onChanged : (
         mutation : MutationRecord
@@ -48,7 +48,7 @@ export function useMutationObserver(
 ) : void;
 
 export function useResizeObserver(
-    target : React.MutableRefObject<Element>,
+    target : MutableRefObject<Element>,
     onRegionChanged : (
         entry : ResizeObserverEntry
     ) => void,
