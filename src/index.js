@@ -1,4 +1,7 @@
-export * from "./generate-random-key";
-export * from "./create-simple-context-enhancer";
-export * from "./hooks-utils";
-export * from "./size-unit-context";
+module.exports = Object.assign(
+    {},
+    require("./generate-random-key"),
+    require("./create-simple-context-enhancer"),
+    require("./hooks-utils"),
+    require("./size-unit-context")
+);

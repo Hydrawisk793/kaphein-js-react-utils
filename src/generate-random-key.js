@@ -1,8 +1,7 @@
-import { generateRandomHexString } from "kaphein-js";
+var kapheinJs = require("kaphein-js");
+var generateRandomHexString = kapheinJs.generateRandomHexString;
 
-export const {
-    generateRandomKey,
-} = (function ()
+module.exports = (function ()
 {
     /**
      *  @param {number} length
