@@ -1,6 +1,6 @@
 {
     "name": "kaphein-js-react-utils",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "author": "Hydrawisk793 <hyw793@gmail.com>",
     "main": "dist/index.js",
     "module": "dist/index.js",
