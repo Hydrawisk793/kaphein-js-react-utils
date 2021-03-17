@@ -6,7 +6,7 @@ var useLayoutEffect = React.useLayoutEffect;
 var kapheinJs = require("kaphein-js");
 var isFunction = kapheinJs.isFunction;
 var forOf = kapheinJs.forOf;
-var deepEquals = kapheinJs.deepEquals;
+var shallowEquals = kapheinJs.shallowEquals;
 
 module.exports = (function ()
 {
@@ -98,11 +98,11 @@ module.exports = (function ()
         /** @type {AnyEqualComparer} */var comparer = arguments[2];
         if("function" !== typeof comparer)
         {
-            comparer = deepEquals;
+            comparer = shallowEquals;
         }
 
         var memoRef = useRef(/** @type {{ deps : any[], value : V }} */(null));
-        if(!memoRef.current || !comparer(deps, memoRef.current.deps))
+        if(!memoRef.current || !_compareDeps(deps, memoRef.current.deps, comparer))
         {
             memoRef.current = {
                 deps : deps,
@@ -111,6 +111,32 @@ module.exports = (function ()
         }
 
         return memoRef.current.value;
+    }
+
+    /**
+     *  @param {any[]} oldDeps
+     *  @param {any[]} newDeps
+     *  @param {AnyEqualComparer} comparer
+     */
+    function _compareDeps(oldDeps, newDeps, comparer)
+    {
+        var isArr = Array.isArray(newDeps);
+        var result = Array.isArray(oldDeps) === isArr;
+        if(result && isArr)
+        {
+            var len = newDeps.length;
+            result = oldDeps.length === len;
+            if(result)
+            {
+                var i;
+                for(i = 0; result && i < len; ++i)
+                {
+                    result = comparer(oldDeps[i], newDeps[i]);
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
