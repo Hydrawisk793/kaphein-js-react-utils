@@ -7,12 +7,15 @@ var kapheinJs = require("kaphein-js");
 var isFunction = kapheinJs.isFunction;
 var forOf = kapheinJs.forOf;
 var shallowEquals = kapheinJs.shallowEquals;
+var isArray = kapheinJs.isArray;
 
 module.exports = (function ()
 {
     /**
      *  @typedef {import("kaphein-js").EqualComparer<any>} AnyEqualComparer
      */
+
+    var _isArray = Array.isArray || isArray;
 
     /**
      *  @template T
@@ -120,8 +123,8 @@ module.exports = (function ()
      */
     function _compareDeps(oldDeps, newDeps, comparer)
     {
-        var isArr = Array.isArray(newDeps);
-        var result = Array.isArray(oldDeps) === isArr;
+        var isArr = _isArray(newDeps);
+        var result = _isArray(oldDeps) === isArr;
         if(result && isArr)
         {
             var len = newDeps.length;
