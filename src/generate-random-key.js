@@ -4,6 +4,7 @@ var generateRandomHexString = kapheinJs.generateRandomHexString;
 module.exports = (function ()
 {
     /**
+     *  @deprecated
      *  @param {number} length
      */
     function generateRandomKey(length)
