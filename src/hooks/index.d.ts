@@ -44,24 +44,3 @@ export function useComponentMountEffects(
 export function useEventCallback<T extends (...args : any[]) => any>(
     callback : T
 ) : T;
-
-export function useMutationObserver(
-    target : MutableRefObject<Element>,
-    observerOption : MutationObserverInit,
-    onChanged : (
-        mutation : MutationRecord
-    ) => void,
-    option? : {
-        MutationObserver : typeof MutationObserver;
-    }
-) : void;
-
-export function useResizeObserver(
-    target : MutableRefObject<Element>,
-    onRegionChanged : (
-        entry : ResizeObserverEntry
-    ) => void,
-    option? : {
-        ResizeObserver : typeof ResizeObserver;
-    }
-) : void;

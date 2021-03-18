@@ -1,7 +1,13 @@
 import React, { memo, useCallback, useRef, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { useComponentDidMount, useComponentWillUnmount, useMutationObserver } from "../../hooks-utils";
 
+import {
+    useComponentDidMount,
+    useComponentWillUnmount,
+} from "../../../hooks";
+import {
+    useMutationObserver,
+} from "../../hooks";
 import { SizeUnitContext } from "../size-unit-context";
 
 export const BrowserSizeUnitProvider = (function ()
@@ -62,7 +68,8 @@ export const BrowserSizeUnitProvider = (function ()
         useComponentDidMount(
             function ()
             {
-                if(isWindowExist.current) {
+                if(isWindowExist.current)
+                {
                     window.addEventListener("resize", onWindowResize);
 
                     setRem(Number.parseFloat(getComputedStyle(document.documentElement).fontSize));
@@ -72,7 +79,8 @@ export const BrowserSizeUnitProvider = (function ()
         useComponentWillUnmount(
             function ()
             {
-                if(isWindowExist.current) {
+                if(isWindowExist.current)
+                {
                     window.removeEventListener("resize", onWindowResize);
                 }
             }
@@ -98,14 +106,10 @@ export const BrowserSizeUnitProvider = (function ()
             </SizeUnitContext.Provider>
         );
     }
-
     BrowserSizeUnitProvider.displayName = "BrowserSizeUnitProvider";
-
     BrowserSizeUnitProvider.propTypes = {
         children : PropTypes.node,
     };
-
-    BrowserSizeUnitProvider.whyDidYouRender = true;
 
     return memo(BrowserSizeUnitProvider);
 })();
