@@ -17,7 +17,6 @@ module.exports = (function ()
             globalObject : "this"
         },
         plugins : [
-            // new ES3Plugin(),
             new CopyWebpackPlugin({
                 patterns : [
                     {
@@ -33,12 +32,12 @@ module.exports = (function ()
                 {
                     test : /\.tsx?$/,
                     exclude : ["/node_modules/"],
-                    loaders : ["babel-loader"],
+                    loader : "babel-loader",
                 },
                 {
                     test : /\.jsx?$/,
                     exclude : ["/node_modules/"],
-                    loaders : ["babel-loader"],
+                    loader : "babel-loader",
                 },
             ],
         },
