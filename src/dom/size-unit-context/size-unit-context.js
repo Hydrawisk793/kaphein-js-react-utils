@@ -1,17 +1,15 @@
-import { createContext } from "react";
+var React = require("react");
+var createContext = React.createContext;
 
-export const {
-    SizeUnitContext,
-    defaultValue,
-} = (function ()
+module.exports = (function ()
 {
-    const defaultValue = {
+    var defaultValue = {
         oneVw : 0,
         oneVh : 0,
         oneRem : 0,
     };
 
-    const SizeUnitContext = createContext(defaultValue);
+    var SizeUnitContext = createContext(defaultValue);
     SizeUnitContext.displayName = "SizeUnitContext";
 
     return {

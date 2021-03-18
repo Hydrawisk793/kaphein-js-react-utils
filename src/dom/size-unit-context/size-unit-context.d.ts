@@ -1,5 +1,5 @@
 import { Context } from "react";
-import { ReactContextValueType } from "../ts-utils";
+import { ReactContextValueType } from "../../ts-utils";
 
 export const SizeUnitContext : Context<{
     vw : number;

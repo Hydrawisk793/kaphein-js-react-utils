@@ -1,6 +1,6 @@
 import React from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { memoize } from "kaphein-js";
+import { memoize } from "kaphein-js-memoization";
 
 import { ReactContextValueType } from "./ts-utils";
 import { SimpleContextEnhancerOption } from "./simple-context-enhancer-option";
@@ -34,7 +34,6 @@ export function createSimpleContextEnhancer<X extends React.Context<any> = React
             );
         }
         I.injectedPropType = {} as Xp;
-        I.whyDidYouRender = true;
 
         var F = React.memo(I);
         F.displayName = `WithContext<${ option.contextDisplayName }>(${ componentType.displayName || componentType.name })`;
