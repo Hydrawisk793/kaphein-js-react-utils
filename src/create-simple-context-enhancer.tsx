@@ -1,6 +1,6 @@
 import React from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { memoize } from "kaphein-js";
+import { memoize } from "kaphein-js-memoization";
 
 import { ReactContextValueType } from "./ts-utils";
 import { SimpleContextEnhancerOption } from "./simple-context-enhancer-option";

@@ -1,8 +1,9 @@
 var React = require("react");
 var useEffect = React.useEffect;
-var kapheinJs = require("kaphein-js");
-var isFunction = kapheinJs.isFunction;
-var forOf = kapheinJs.forOf;
+var kapheinJsTypeTrait = require("kaphein-js-type-trait");
+var isFunction = kapheinJsTypeTrait.isFunction;
+var kapheinJsCollection = require("kaphein-js-collection").forOf;
+var forOf = kapheinJsCollection.forOf;
 
 module.exports = (function ()
 {

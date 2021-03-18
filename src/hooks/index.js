@@ -3,15 +3,16 @@ var useRef = React.useRef;
 var useCallback = React.useCallback;
 var useEffect = React.useEffect;
 var useLayoutEffect = React.useLayoutEffect;
-var kapheinJs = require("kaphein-js");
-var shallowEquals = kapheinJs.shallowEquals;
-var isArray = kapheinJs.isArray;
-var isFunction = kapheinJs.isFunction;
+var kapheinJsTypeTrait = require("kaphein-js-type-trait");
+var isArray = kapheinJsTypeTrait.isArray;
+var isFunction = kapheinJsTypeTrait.isFunction;
+var kapheinJsObjectUtils = require("kaphein-js-object-utils");
+var shallowEquals = kapheinJsObjectUtils.shallowEquals;
 
 module.exports = (function ()
 {
     /**
-     *  @typedef {import("kaphein-js").EqualComparer<any>} AnyEqualComparer
+     *  @typedef {import("kaphein-js-collection").EqualComparer<any>} AnyEqualComparer
      */
 
     var _slice = Array.prototype.slice;

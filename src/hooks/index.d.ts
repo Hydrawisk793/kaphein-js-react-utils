@@ -1,5 +1,5 @@
 import { DependencyList, MutableRefObject } from "react";
-import { EqualComparer } from "kaphein-js";
+import { EqualComparer } from "kaphein-js-collection";
 
 export function usePrevious<T>(
     value : T,
