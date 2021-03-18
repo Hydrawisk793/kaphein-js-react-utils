@@ -2,7 +2,7 @@ var React = require("react");
 var useEffect = React.useEffect;
 var kapheinJsTypeTrait = require("kaphein-js-type-trait");
 var isFunction = kapheinJsTypeTrait.isFunction;
-var kapheinJsCollection = require("kaphein-js-collection").forOf;
+var kapheinJsCollection = require("kaphein-js-collection");
 var forOf = kapheinJsCollection.forOf;
 
 module.exports = (function ()
